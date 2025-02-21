@@ -13,8 +13,6 @@
 /* Common B1C1 includes go here (i.e. not display) */
 /* TODO: Split this file into bluetooth/keys/display/memory/power/thermal */
 
-/plugin/;
-
 #include <dt-bindings/clock/qcom,gcc-sdm845.h>
 #include <dt-bindings/clock/qcom,camcc-sdm845.h>
 #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
