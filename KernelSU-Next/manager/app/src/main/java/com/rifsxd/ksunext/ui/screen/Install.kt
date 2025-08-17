@@ -43,6 +43,7 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -80,31 +81,6 @@ import com.rifsxd.ksunext.ui.util.rootAvailable
 @Destination<RootGraph>
 @Composable
 fun InstallScreen(navigator: DestinationsNavigator) {
-    var showLkmWarning by rememberSaveable { mutableStateOf(true) }
-
-    if (showLkmWarning) {
-        AlertDialog(
-            onDismissRequest = {
-                showLkmWarning = false
-                navigator.popBackStack()
-            },
-            title = { Text(stringResource(R.string.warning)) },
-            text = { Text(stringResource(R.string.lkm_warning_message)) },
-            confirmButton = {
-                TextButton(onClick = { showLkmWarning = false }) {
-                    Text(stringResource(R.string.proceed))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    showLkmWarning = false
-                    navigator.popBackStack()
-                }) {
-                    Text(stringResource(R.string.cancel))
-                }
-            }
-        )
-    }
 
     var installMethod by remember {
         mutableStateOf<InstallMethod?>(null)
@@ -234,7 +210,7 @@ private fun SelectInstallMethod(onSelected: (InstallMethod) -> Unit = {}) {
     val rootAvailable = rootAvailable()
     val isAbDevice = isAbDevice()
     val selectFileTip = stringResource(
-        id = R.string.select_file_tip, if (isInitBoot()) "init_boot" else "boot"
+        id = R.string.select_file_tip, if (isInitBoot()) "init_boot/vendor_boot" else "boot"
     )
     val radioOptions =
         mutableListOf<InstallMethod>(InstallMethod.SelectFile(summary = selectFileTip))
@@ -370,7 +346,11 @@ private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.install)) }, navigationIcon = {
+        title = { Text(
+                text = stringResource(R.string.install),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Black,
+            ) }, navigationIcon = {
             IconButton(
                 onClick = onBack
             ) { Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null) }
